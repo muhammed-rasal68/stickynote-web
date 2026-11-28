@@ -7,11 +7,11 @@ A calm, offline-first sticky notes app for the web. Capture quick thoughts, chec
 - **Notes with checklists** — title, free-form content, and interactive to-dos
 - **Color-coded notes** — yellow, pink, blue, and green
 - **Pin, search, and filter** — keep important notes on top and find anything instantly
-- **Offline first** — notes live in IndexedDB, so the app works without a connection
+- **Fully offline** — notes live in IndexedDB and the app shell is cached by a service worker, so it opens and works without a connection
 - **Undo delete** — deleted notes are soft-deleted and can be restored
 - **Optional cross-device sync** — powered by Supabase, paired with a short code
 - **Device management** — list, rename, and remove devices in a shared workspace
-- **Installable, mobile-friendly UI** — responsive layout with safe-area support and PWA meta tags
+- **Installable PWA** — installable on phones and desktops, with responsive layout and safe-area support
 
 ## Tech Stack
 
@@ -38,7 +38,9 @@ npm install
 npm run dev
 ```
 
-The app runs at `http://localhost:5173`. Without Supabase credentials it works fully offline and sync is disabled.
+The app runs at `http://localhost:5174`. Without Supabase credentials it works fully offline and sync is disabled.
+
+The service worker is only active in production builds. To verify offline support, run `npm run build && npm run preview`, open the app once, then switch the browser DevTools to offline mode and reload — the app shell and all notes still load.
 
 ### Available scripts
 
@@ -94,7 +96,7 @@ supabase/
 
 ## Deployment
 
-The app is ready for [Netlify](https://www.netlify.com/). The included [`netlify.toml`](netlify.toml) sets the build command to `npm run build` and publishes the `dist` folder.
+The app is ready for [Netlify](https://www.netlify.com/). The included [`netlify.toml`](netlify.toml) sets the build command to `npm run build` and publishes the `dist` folder. The build also generates the web app manifest and service worker, so the deployed app is installable and works offline after the first visit.
 
 Set the following environment variables in your hosting provider:
 
